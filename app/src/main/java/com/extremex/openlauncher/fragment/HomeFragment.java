@@ -1,9 +1,12 @@
 package com.extremex.openlauncher.fragment;
 
 import android.app.WallpaperManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,10 +17,14 @@ import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.extremex.openlauncher.R;
 import com.extremex.openlauncher.adapter.AppAdapter;
+import com.extremex.openlauncher.data.SharedData;
 import com.extremex.openlauncher.databinding.FragmentHomeBinding;
+import com.extremex.openlauncher.extxAIM.WallpaperBrightnessChecker;
+import com.extremex.openlauncher.service.TimeService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +35,12 @@ public class HomeFragment extends Fragment {
     private PackageManager packageManager;
     private List<ResolveInfo> apps;
 
+    private class TimeBroadCastListener extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+        }
+    }
 
     @Nullable
     @Override
@@ -40,6 +53,18 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentHomeBinding.bind(view);
 
+        SharedData.getTime().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String time) {
+                binding.TimeView.setText(time);
+            }
+        });
+
+        if( WallpaperBrightnessChecker.isWallpaperDark(requireContext())){
+            binding.TimeView.setTextColor(Color.WHITE);
+        } else  {
+            binding.TimeView.setTextColor(Color.GRAY);
+        }
         packageManager = requireActivity().getPackageManager();
         apps = getInstalledApps();
 
@@ -75,5 +100,30 @@ public class HomeFragment extends Fragment {
             }
         }
         return filteredApps;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

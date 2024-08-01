@@ -4,23 +4,49 @@
     android:layout_height="match_parent"
     android:background="#00000000">
 
-    <GridView
-        android:id="@+id/VerticalAppDock"
-        android:layout_width="250dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="-1dp"
+        android:layout_alignParentEnd="true"
         android:background="@drawable/bg_app_dock_shape"
-        android:columnWidth="60dp"
-        android:gravity="bottom"
-        android:horizontalSpacing="1dp"
-        android:layoutDirection="locale"
-        android:numColumns="auto_fit"
-        android:paddingVertical="15dp"
-        android:scrollIndicators="none"
-        android:scrollbars="none"
-        android:stretchMode="columnWidth"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="All Apps"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="cursive"/>
+
+        <GridView
+            android:id="@+id/VerticalAppDock"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="-1dp"
+            android:columnWidth="60dp"
+            android:gravity="bottom"
+            android:horizontalSpacing="1dp"
+            android:layoutDirection="locale"
+            android:numColumns="auto_fit"
+            android:paddingVertical="5dp"
+            android:scrollIndicators="none"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:animateLayoutChanges="true"/>
+
+        <com.google.android.material.search.SearchBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="true"
+            android:hint="search apps"
+            android:alpha="0.5"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/TimeView"
